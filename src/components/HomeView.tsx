@@ -1,6 +1,5 @@
 import { Card } from "@/components/ui/card";
 import { Avatar } from "@/components/ui/avatar";
-import { Badge } from "@/components/ui/badge";
 import Icon from "@/components/ui/icon";
 
 type View = "home" | "feed" | "profile" | "messages" | "notifications" | "settings";
@@ -9,6 +8,7 @@ interface User {
   username: string;
   email: string;
   avatar: string;
+  role?: string;
 }
 
 interface HomeViewProps {
@@ -18,11 +18,15 @@ interface HomeViewProps {
 }
 
 const HomeView = ({ user, onLogout, onNavigate }: HomeViewProps) => {
+  const roleLabels: Record<string, string> = {
+    creator: "Создатель",
+    admin: "Администратор",
+    user: "Пользователь",
+  };
+
   const tiles = [
     { id: "feed", icon: "Newspaper", label: "Лента", color: "bg-[hsl(var(--metro-blue))]", size: "large" },
     { id: "profile", icon: "User", label: "Профиль", color: "bg-[hsl(var(--metro-green))]", size: "small" },
-    { id: "messages", icon: "MessageSquare", label: "Сообщения", color: "bg-[hsl(var(--metro-purple))]", size: "small", count: 3 },
-    { id: "notifications", icon: "Bell", label: "Уведомления", color: "bg-[hsl(var(--metro-orange))]", size: "medium", count: 7 },
     { id: "settings", icon: "Settings", label: "Настройки", color: "bg-[hsl(var(--muted))]", size: "small" },
   ];
 
@@ -37,6 +41,9 @@ const HomeView = ({ user, onLogout, onNavigate }: HomeViewProps) => {
           <div className="flex items-center gap-3">
             <div className="text-right mr-2">
               <p className="text-sm text-white">{user.username}</p>
+              {user.role && (
+                <p className="text-xs text-primary font-medium">{roleLabels[user.role] || user.role}</p>
+              )}
               <button onClick={onLogout} className="text-xs text-muted-foreground hover:text-white">
                 Выйти
               </button>
@@ -62,11 +69,6 @@ const HomeView = ({ user, onLogout, onNavigate }: HomeViewProps) => {
               <div className="absolute inset-0 bg-black/10 group-hover:bg-black/0 transition-colors"></div>
               <Icon name={tile.icon as any} size={tile.size === "large" ? 48 : 32} className="mb-3 relative z-10" />
               <span className="text-lg font-light relative z-10">{tile.label}</span>
-              {tile.count && (
-                <Badge className="absolute top-3 right-3 bg-destructive text-white border-0 z-10">
-                  {tile.count}
-                </Badge>
-              )}
             </Card>
           ))}
         </div>

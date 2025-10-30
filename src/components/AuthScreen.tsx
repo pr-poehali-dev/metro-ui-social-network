@@ -10,6 +10,7 @@ interface User {
   username: string;
   email: string;
   avatar: string;
+  role?: string;
 }
 
 interface AuthScreenProps {
@@ -99,6 +100,7 @@ const AuthScreen = ({ onLogin }: AuthScreenProps) => {
         username: data.user.username,
         email: data.user.email,
         avatar: data.user.avatar,
+        role: data.user.role,
       };
       
       onLogin(user);

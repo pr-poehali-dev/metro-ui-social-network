@@ -22,11 +22,7 @@ interface MessagesViewProps {
 const MessagesView = ({ onBack }: MessagesViewProps) => {
   const [selectedChat, setSelectedChat] = useState<number | null>(null);
 
-  const chats: Chat[] = [
-    { id: 1, name: "Анна Смирнова", avatar: "AS", lastMessage: "Отлично, созвонимся завтра!", time: "10:30", unread: 2 },
-    { id: 2, name: "Команда проекта", avatar: "КП", lastMessage: "Кто будет на встрече?", time: "09:15", unread: 0 },
-    { id: 3, name: "Дмитрий Козлов", avatar: "ДК", lastMessage: "Спасибо за помощь!", time: "Вчера", unread: 0 },
-  ];
+  const chats: Chat[] = [];
 
   return (
     <div className="min-h-screen bg-background flex">
@@ -42,37 +38,14 @@ const MessagesView = ({ onBack }: MessagesViewProps) => {
         </div>
 
         <ScrollArea className="flex-1">
-          {chats.map((chat) => (
-            <div
-              key={chat.id}
-              onClick={() => setSelectedChat(chat.id)}
-              className={`p-4 border-b border-border cursor-pointer hover:bg-muted/50 transition-colors ${
-                selectedChat === chat.id ? "bg-muted" : ""
-              }`}
-            >
-              <div className="flex items-start gap-3">
-                <Avatar className="h-12 w-12 bg-primary flex-shrink-0">
-                  <div className="flex items-center justify-center w-full h-full text-white font-semibold text-sm">
-                    {chat.avatar}
-                  </div>
-                </Avatar>
-                <div className="flex-1 min-w-0">
-                  <div className="flex items-center justify-between mb-1">
-                    <h3 className="font-medium text-white truncate">{chat.name}</h3>
-                    <span className="text-xs text-muted-foreground flex-shrink-0">{chat.time}</span>
-                  </div>
-                  <div className="flex items-center justify-between">
-                    <p className="text-sm text-muted-foreground truncate">{chat.lastMessage}</p>
-                    {chat.unread > 0 && (
-                      <Badge className="bg-destructive text-white border-0 ml-2 flex-shrink-0">
-                        {chat.unread}
-                      </Badge>
-                    )}
-                  </div>
-                </div>
+          {chats.length === 0 && (
+            <div className="flex items-center justify-center h-full text-muted-foreground p-8">
+              <div className="text-center">
+                <Icon name="MessageSquare" size={48} className="mx-auto mb-3 opacity-50" />
+                <p>Нет сообщений</p>
               </div>
             </div>
-          ))}
+          )}
         </ScrollArea>
       </div>
 

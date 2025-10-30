@@ -12,6 +12,7 @@ interface User {
   username: string;
   email: string;
   avatar: string;
+  role?: string;
 }
 
 interface Post {
@@ -31,44 +32,7 @@ const Index = () => {
   const [currentView, setCurrentView] = useState<View>("home");
   const [user, setUser] = useState<User | null>(null);
 
-  const [posts, setPosts] = useState<Post[]>([
-    {
-      id: 1,
-      author: "Анна Смирнова",
-      avatar: "AS",
-      time: "2 часа назад",
-      content: "Отличный день для новых проектов! 🚀 Только что завершила разработку нового дизайна.",
-      upvotes: 24,
-      downvotes: 3,
-      comments: 5,
-      shares: 2,
-      userVote: null,
-    },
-    {
-      id: 2,
-      author: "Дмитрий Козлов",
-      avatar: "ДК",
-      time: "4 часа назад",
-      content: "Кто-нибудь работал с Metro UI? Хочу услышать ваше мнение о подходах к дизайну интерфейсов.",
-      upvotes: 18,
-      downvotes: 2,
-      comments: 12,
-      shares: 3,
-      userVote: null,
-    },
-    {
-      id: 3,
-      author: "Мария Петрова",
-      avatar: "МП",
-      time: "6 часов назад",
-      content: "Запускаем новый стартап! Ищем дизайнеров и разработчиков в команду. 💼",
-      upvotes: 45,
-      downvotes: 5,
-      comments: 23,
-      shares: 8,
-      userVote: null,
-    },
-  ]);
+  const [posts, setPosts] = useState<Post[]>([]);
 
   useEffect(() => {
     const savedUser = localStorage.getItem("fih_user");
