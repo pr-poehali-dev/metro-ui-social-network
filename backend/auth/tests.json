@@ -1,0 +1,53 @@
+{
+  "tests": [
+    {
+      "name": "Valid login credentials",
+      "method": "POST",
+      "path": "/",
+      "body": {
+        "username": "qdvhxfs",
+        "password": "aboba333"
+      },
+      "expectedStatus": 200,
+      "expectedBody": {
+        "success": true,
+        "user": {
+          "username": "string",
+          "role": "string"
+        }
+      },
+      "bodyMatcher": "partial"
+    },
+    {
+      "name": "Invalid credentials",
+      "method": "POST",
+      "path": "/",
+      "body": {
+        "username": "wronguser",
+        "password": "wrongpass"
+      },
+      "expectedStatus": 401,
+      "expectedBody": {
+        "error": "string"
+      },
+      "bodyMatcher": "partial"
+    },
+    {
+      "name": "Missing credentials",
+      "method": "POST",
+      "path": "/",
+      "body": {},
+      "expectedStatus": 400,
+      "expectedBody": {
+        "error": "string"
+      },
+      "bodyMatcher": "partial"
+    },
+    {
+      "name": "CORS preflight",
+      "method": "OPTIONS",
+      "path": "/",
+      "expectedStatus": 200
+    }
+  ]
+}
